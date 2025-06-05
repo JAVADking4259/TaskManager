@@ -10,6 +10,7 @@ require('dotenv').config({ path: __dirname + '/.env' });
 app.use(express.json());
 app.use(morgan('dev'));
 app.use(cors());
+const ErrorHandler = require('./src/middlewares/ErrorHandlerMiddleWare');
 
 serviceNames.forEach((serviceName) => {
     const service = require(`./src/services/${serviceName}/routes.js`);
@@ -26,6 +27,8 @@ mongoose
         console.log('database connected successfully.');
     })
     .catch((err) => console.error('MongoDB connection error:', err));
+
+app.use(ErrorHandler);
 
 const port = process.env.PORT;
 app.listen(port, () => {

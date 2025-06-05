@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const statics = require('../../helpers/statics');
 
 const userModel = new mongoose.Schema(
     {
@@ -10,6 +11,10 @@ const userModel = new mongoose.Schema(
         password: {
             type: String,
             required: true
+        },
+        role: {
+            type: String,
+            default: statics.role.USER
         },
         createdAt: {
             type: Date,
