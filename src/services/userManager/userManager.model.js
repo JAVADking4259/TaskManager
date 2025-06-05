@@ -14,7 +14,7 @@ const userModel = new mongoose.Schema(
         },
         role: {
             type: String,
-            default: statics.role.USER
+            default: statics.role.USER.name
         },
         createdAt: {
             type: Date,
