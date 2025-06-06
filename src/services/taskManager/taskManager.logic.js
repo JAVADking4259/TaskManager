@@ -13,7 +13,7 @@ const createTask = async (inputData) => {
     await task.save();
 
     return {
-        message: 'وظیفه با موفقیا لیجاد شد',
+        message: 'وظیفه با موفقیت لیجاد شد',
         data: task
     };
 };

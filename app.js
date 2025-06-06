@@ -1,17 +1,17 @@
 const express = require('express');
 const app = express();
-const path = require('path');
-const mongoose = require('mongoose');
 const fs = require('fs');
-const serviceNames = fs.readdirSync('./src/services');
-const morgan = require('morgan');
 const cors = require('cors');
-require('dotenv').config({ path: __dirname + '/.env' });
-app.use(express.json());
-app.use(morgan('dev'));
-app.use(cors());
+const morgan = require('morgan');
 const ErrorHandler = require('./src/middlewares/ErrorHandlerMiddleWare');
 
+require('dotenv').config();
+
+app.use(express.json());
+app.use(cors());
+app.use(morgan('dev'));
+
+const serviceNames = fs.readdirSync('./src/services');
 serviceNames.forEach((serviceName) => {
     const service = require(`./src/services/${serviceName}/routes.js`);
     if (typeof service === 'function') {
@@ -21,16 +21,6 @@ serviceNames.forEach((serviceName) => {
     }
 });
 
-mongoose
-    .connect(process.env.DATABASE_URL)
-    .then(() => {
-        console.log('database connected successfully.');
-    })
-    .catch((err) => console.error('MongoDB connection error:', err));
-
 app.use(ErrorHandler);
 
-const port = process.env.PORT;
-app.listen(port, () => {
-    console.log(`server running on port: ${port}`);
-});
+module.exports = app;
